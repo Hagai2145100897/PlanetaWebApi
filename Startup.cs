@@ -22,7 +22,7 @@ namespace PlanetaWebApi
             services.AddControllers();
 
             services.AddTransient<IRepository<ClientItem>, DClientRepository>(
-                provider => new DClientRepository(Configuration["ConnectionStrings:ClientConnection"]));
+                provider => new DClientRepository(Configuration["ConnectionStrings:DefaultConnection"]));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
