@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PlanetaWebApi.Models;
+using PlanetaWebApi.Repositories;
 
 namespace PlanetaWebApi
 {
@@ -18,6 +20,9 @@ namespace PlanetaWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddTransient<IRepository<ClientItem>, DClientRepository>(
+                provider => new DClientRepository(Configuration["ConnectionStrings:ClientConnection"]));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
