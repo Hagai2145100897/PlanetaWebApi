@@ -88,6 +88,7 @@ namespace PlanetaWebApi.Tests.TestConverters.TestSubnetConverter
         }
         
         [TestMethod]
+        // Not Implemented
         public void TestInvalidNetworkPrefixInMask()
         {
             var testInnerSubnet1 = new InnerSubnetItem() {
@@ -113,6 +114,7 @@ namespace PlanetaWebApi.Tests.TestConverters.TestSubnetConverter
         }
         
         [TestMethod]
+        // Not Implemented
         public void TestInvalidNetworkPrefixTooManySlash()
         {
             var testInnerSubnet1 = new InnerSubnetItem() {
