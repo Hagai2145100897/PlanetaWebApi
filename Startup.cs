@@ -4,8 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PlanetaWebApi.Models;
-using PlanetaWebApi.Repositories;
 using PlanetaWebApi.Repositories.Basic;
+using PlanetaWebApi.Repositories.Special;
 
 namespace PlanetaWebApi
 {
@@ -20,11 +20,19 @@ namespace PlanetaWebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new CustomJsonConverter());
+                });
+
 
             services.AddTransient<IRepository<ClientItem>, DClientRepository>(
                 provider => new DClientRepository(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddTransient<IRepository<SubnetItem>, DSubnetRepository>(
                 provider => new DSubnetRepository(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddTransient<IClientSubnetsRepository, DClientSubnetsRepository>(
+                provider => new DClientSubnetsRepository(Configuration["ConnectionStrings:DefaultConnection"]));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
