@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PlanetaWebApi.Models;
 using PlanetaWebApi.Repositories;
+using PlanetaWebApi.Repositories.Basic;
 
 namespace PlanetaWebApi
 {
@@ -19,10 +20,11 @@ namespace PlanetaWebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
 
             services.AddTransient<IRepository<ClientItem>, DClientRepository>(
                 provider => new DClientRepository(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddTransient<IRepository<SubnetItem>, DSubnetRepository>(
+                provider => new DSubnetRepository(Configuration["ConnectionStrings:DefaultConnection"]));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

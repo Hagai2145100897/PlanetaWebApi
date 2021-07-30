@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PlanetaWebApi.Models;
-using PlanetaWebApi.Repositories;
+using PlanetaWebApi.Repositories.Basic;
 using System.Collections.Generic;
 
 namespace PlanetaWebApi.Controllers
@@ -8,23 +8,23 @@ namespace PlanetaWebApi.Controllers
     [Route("[controller]")]
     public class ClientController : Controller
     {
-        private readonly IRepository<ClientItem> ClienRepository;
+        private readonly IRepository<ClientItem> Repository;
 
         public ClientController(IRepository<ClientItem> clienRepository)
         {
-            ClienRepository = clienRepository;
+            Repository = clienRepository;
         }
 
         [HttpGet(Name = "GetAllClients")]
         public IEnumerable<ClientItem> Get()
         {
-            return ClienRepository.Get();
+            return Repository.Get();
         }
 
-        [HttpGet("{id}", Name = "GetClientItem")]
+        [HttpGet("{id}", Name = "GetClient")]
         public IActionResult Get(int id)
         {
-            ClientItem clientItem = ClienRepository.Get(id);
+            ClientItem clientItem = Repository.Get(id);
 
             if (clientItem == null)
             {
@@ -41,8 +41,8 @@ namespace PlanetaWebApi.Controllers
             {
                 return BadRequest();
             }
-            ClienRepository.Create(clientItem);
-            return CreatedAtRoute("GetClientItem", new { id = clientItem.Id }, clientItem);
+            Repository.Create(clientItem);
+            return CreatedAtRoute("GetClient", new { id = clientItem.Id }, clientItem);
         }
 
         [HttpPut("{id}")]
@@ -53,20 +53,20 @@ namespace PlanetaWebApi.Controllers
                 return BadRequest();
             }
 
-            var clientItem = ClienRepository.Get(id);
+            var clientItem = Repository.Get(id);
             if (clientItem == null)
             {
                 return NotFound();
             }
 
-            ClienRepository.Update(updatedClientItem);
+            Repository.Update(updatedClientItem);
             return RedirectToRoute("GetAllClients");
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var deletedClientItem = ClienRepository.Delete(id);
+            var deletedClientItem = Repository.Delete(id);
 
             if (deletedClientItem == null)
             {
