@@ -36,10 +36,10 @@ namespace PlanetaWebApi.Repositories.InnerModel
         {
             var mask = subnet.SubnetMask;
             if (mask < 0 || mask > 32)
-                throw new ArgumentException();
+                throw new ArgumentException($"Mask expected be in the range [0, 32], but was {mask}");
             var address = subnet.NetworkPrefix.GetAddressBytes();
             if (address.Skip(mask).Aggregate(false, (acc, nb) => acc || nb != 0))
-                throw new ArgumentException();
+                throw new ArgumentException($"Prefix expected with 0's in tail, but was {address}");
         }
     }
 }
