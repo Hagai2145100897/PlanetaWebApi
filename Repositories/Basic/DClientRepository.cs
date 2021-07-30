@@ -1,12 +1,12 @@
 using PlanetaWebApi.Models;
 
-namespace PlanetaWebApi.Repositories
+namespace PlanetaWebApi.Repositories.Basic
 {
     public class DClientRepository : DRepository<ClientItem>
     {
-        private static ItemInfo ClientInfo = new ItemInfo("Client", new[] { "FullName", "Age", "Gender" });
+        protected override TableInfo table => TableInfo.ClientTableInfo;
 
-        public DClientRepository(string connectionString) : base(connectionString, ClientInfo)
+        public DClientRepository(string connectionString) : base(connectionString)
         {
         }
     }
