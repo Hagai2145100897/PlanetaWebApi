@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using PlanetaWebApi.Models;
 using PlanetaWebApi.Repositories.Special;
 
 namespace PlanetaWebApi.Controllers
@@ -14,9 +16,9 @@ namespace PlanetaWebApi.Controllers
         }
 
         [HttpGet("{clientId}", Name = "GetClientSubnets")]
-        public IActionResult Get(int clientId)
+        public IEnumerable<SubnetItem> Get(int clientId)
         {
-            return new ObjectResult(Repository.Get(clientId));
+            return Repository.Get(clientId);
         }
     }
 }
